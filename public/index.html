@@ -1,0 +1,66 @@
+
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <title>Однострочные программы</title>
+
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+
+        <link rel='stylesheet' href='styles.css' />
+
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    </head>
+    <body class='app'>
+        <div class="app__loader">
+            <div class="preloader-wrapper big active">
+                <div class="spinner-layer spinner-red-only">
+                    <div class="circle-clipper left">
+                    <div class="circle"></div>
+                    </div><div class="gap-patch">
+                    <div class="circle"></div>
+                    </div><div class="circle-clipper right">
+                    <div class="circle"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class='app__main'>
+            <nav>
+                <div class='nav-wrapper'>
+                    <a href='#' class='brand-logo'>
+                        <i class='material-icons'>cloud</i>
+                        Funny experiments
+                    </a>
+                    <ul class="right hide-on-med-and-down">
+                        <li>
+                            <a href='github.com'>
+                                <i class='material-icons'>code_braces</i>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+
+            <div class='app__view'>
+                <div class='programs'>
+                    <div class='programs__loading z-depth-2'>
+                        <h4>Загрузка...</h4>
+                        <div class="progress">
+                            <div class="indeterminate"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id='vendor'>
+            <script src='https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js'></script>
+            <script src='https://code.jquery.com/jquery-3.6.0.min.js'></script>
+        </div>
+
+        <script src='app.js'></script>
+    </body>
+</html>

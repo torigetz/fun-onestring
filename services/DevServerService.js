@@ -1,0 +1,46 @@
+
+import express from 'express';
+import * as appRootDir from 'app-root-dir';
+import * as path from 'path';
+
+const DEFAULT_PORT = 80;
+const INDEX_DIRECTORY = path.join(appRootDir.get(), 'public', 'index.html');
+const STATIC_DIRECTORY = path.join(appRootDir.get(), 'public');
+
+class DevServerController {
+    static getIndex (req, res) {
+        res.sendFile(INDEX_DIRECTORY);
+    }
+
+    static mapRoutes (app) {
+        app.get('/', this.getIndex);
+    }
+}
+
+export class DevServerService {
+    _port;
+    _onRequest;
+    _onStart;
+
+    constructor ({ onStart, onRequest }) {
+        this._onRequest = onRequest;
+        this._onStart = onStart;
+        this._port = process.env.PORT || DEFAULT_PORT;
+    }
+
+    start () {
+        const app = express();
+
+        app.use((req, res, next) => {
+            this._onRequest(req);
+            next();
+        });
+        app.use('/', express.static(STATIC_DIRECTORY));
+
+        DevServerController.mapRoutes(app);
+
+        app.listen(this._port, () => {
+            this._onStart(this._port)
+        });
+    }
+}
