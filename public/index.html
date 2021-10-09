@@ -11,7 +11,7 @@
 
         <link rel='stylesheet' href='styles.css' />
 
-        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0"/> -->
     </head>
     <body class='app'>
         <div class="app__loader">
@@ -29,23 +29,33 @@
         </div>
 
         <div class='app__main'>
-            <nav>
-                <div class='nav-wrapper'>
-                    <a href='#' class='brand-logo'>
-                        <i class='material-icons'>cloud</i>
-                        Funny experiments
-                    </a>
-                    <ul class="right hide-on-med-and-down">
-                        <li>
-                            <a href='github.com'>
-                                <i class='material-icons'>code_braces</i>
+            <nav class="nav-extended">
+                <div class='nav-content'>
+                    <ul 
+                        class='tabs tabs-transparent'
+                        id='navigator'
+                    >
+                        <li
+                            class='tab'
+                        >
+                            <a
+                                href='#examples'
+                            >
+                                Примеры
+                            </a>
+                        </li>
+                        <li class='tab'>
+                            <a
+                                href='#playground'
+                            >
+                                Песочница
                             </a>
                         </li>
                     </ul>
                 </div>
             </nav>
 
-            <div class='app__view'>
+            <div class='app__view' id='route__examples'>
                 <div class='programs'>
                     <div class='programs__loading z-depth-2'>
                         <h4>Загрузка...</h4>
@@ -74,12 +84,67 @@
                     </div>
                 </div>
             </div>
+            <div class='app__view' id='route__playground'>
+                <div class='playground'>
+                    <div class='playground__header'>
+                        <div class='input-field'>
+                            <input
+                                type='text'
+                                id='playground__name'
+                                aria-invalid="true"
+                                required
+                            />
+                            <label>
+                                Название сниппета
+                            </label>
+                        </div>
+                    </div>
+                    <div class='playground__controls z-depth-1'>
+                        <a
+                            class='waves-effect waves-blue btn-flat playground__control control-disabled'
+                            id='playground__run'
+                        >
+                            <i class="material-icons left">play_circle_outline</i>
+                            Запустить
+                        </a>
+                        <a
+                            class='waves-effect waves-blue btn-flat playground__control control-disabled'
+                            id='plauground__save'
+                        >
+                            <i class="material-icons left">save</i>
+                            Сохранить
+                        </a>
+                    </div>
+                    <div class='playground__editors'>
+                        <div class='playground__editor'>
+                            <h5>Редактор</h5>
+                            <div
+                                class='playground__textarea z-depth-1'
+                                id='playground__code'
+                            ></div>
+                        </div>
+                        <div class='playground__editor'>
+                            <h5>Результат</h5>
+                            <div
+                                class='playground__textarea z-depth-1'
+                                id='playground__result'
+                            ></div>
+                            <div class='playground__loader z-depth-1'>
+                                <div class="progress playground__loader-indicator">
+                                    <div class="indeterminate"></div>
+                                </div>    
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <div id='vendor'>
             <script src='https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js'></script>
             <script src='https://code.jquery.com/jquery-3.6.0.min.js'></script>
-            <script src='https://unpkg.com/codeflask/build/codeflask.min.js'></script>
+            <script src="https://ajaxorg.github.io/ace-builds/src-min-noconflict/ace.js"></script>
+            <script src='https://cdnjs.cloudflare.com/ajax/libs/uuid/8.3.2/uuid.min.js'></script>
             <script src='https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.2.0/highlight.min.js'></script>
             <script src='https://cdnjs.cloudflare.com/ajax/libs/axios/0.22.0/axios.min.js'></script>
         </div>

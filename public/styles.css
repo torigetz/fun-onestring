@@ -34,6 +34,7 @@ h5 {
 }
 
 .app__view {
+    display: none;
     padding: 1em;
 }
 
@@ -97,4 +98,83 @@ h5 {
     display: flex;
     gap: 1em;
     flex-direction: column;
+}
+
+.playground {
+    height: 85vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.playground__controls {
+    display: flex;
+    padding: .5em; 
+    gap: .5em;
+}
+
+.playground__control i {
+    margin-right: 0;
+}
+
+.playground__editors {
+    display: flex;
+    flex-direction: row;
+    flex: 1;
+    padding-top: 1em;
+    gap: 1em;
+}
+
+.playground__editor {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+}
+
+.playground__textarea {
+    flex: 1;
+    flex-grow: 1;
+    background-color: #fff;
+    font-family: monospace;
+}
+
+.ace_editor, .ace_editor *{
+    font-family: "Monaco", "Menlo", "Ubuntu Mono", "Droid Sans Mono", "Consolas", monospace !important;
+    font-size: 12px !important;
+    font-weight: 400 !important;
+    letter-spacing: 0 !important;
+}
+
+.playground__header {
+    padding: 0 1em;
+}
+
+.playground__loader {
+    flex: 1;
+    background-color: #fff;
+    font-family: monospace;
+    display: none;
+    align-items: center;
+    justify-content: center;
+}
+
+.playground__loader-indicator {
+    width: 50%;
+}
+
+#playground__result {
+    font-family: "Monaco", "Menlo", "Ubuntu Mono", "Droid Sans Mono", "Consolas", monospace !important;
+    font-size: 12px !important;
+    font-weight: 400 !important;
+    letter-spacing: 0 !important;
+    flex-direction: column;
+    padding: 0 1.5em;
+}
+
+#playground__result pre {
+    white-space: pre-wrap;
+}
+
+.control-disabled {
+    opacity: 0.5;
+    pointer-events: none;
 }

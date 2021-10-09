@@ -2,6 +2,7 @@
 import express from 'express';
 import * as appRootDir from 'app-root-dir';
 import * as path from 'path';
+import bodyParser from 'body-parser';
 import { FilesystemService } from './FilesystemService.js';
 import { MinifyService } from './MinifySerivce.js';
 
@@ -32,9 +33,15 @@ class DevServerController {
         res.send(filtered);
     }
 
-    // static compile (data) {
+    static compile (req, res) {        
+        const minifier = new MinifyService();
 
-    // }
+        const compressed = minifier.compile(req.body.code || '');
+
+        res.send({
+            code: compressed
+        });
+    }
 
     static load (req, res) {
         const { name } = req.query;
@@ -52,6 +59,7 @@ class DevServerController {
         app.get('/', this.getIndex);
         app.get('/list', this.list);
         app.get('/load', this.load)
+        app.post('/compile', this.compile)
     }
 }
 
@@ -69,6 +77,7 @@ export class DevServerService {
     start () {
         const app = express();
 
+        app.use(bodyParser.json());
         app.use((req, res, next) => {
             this._onRequest(req);
             next();
