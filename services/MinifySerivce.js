@@ -5,10 +5,10 @@ import * as appRootDir from 'app-root-dir';
 import { minify as compress } from 'uglify-js';
 
 export class MinifyService {
-    _filename;
+    _filename = '';
 
-    constructor (name = '') {
-        this._filename = `${name}.js`;
+    constructor (name) {
+        if (name) this._filename = `${name}.js`;
     }
 
     compile (code = '') {
