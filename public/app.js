@@ -172,18 +172,50 @@ const saveSnippet = (name, content) => {
     downloader.click();
 }
 
+const CACHE_ITEM = 'snippet/cache';
+
+const loadCache = () => {
+    const cache = localStorage.getItem(CACHE_ITEM) || 'null';
+    return JSON.parse(cache);
+}
+
+const saveCache = (cache) => {
+    const stringified = JSON.stringify(cache);
+    localStorage.setItem(CACHE_ITEM, stringified);
+}
+
+const clearCache = () => {
+    localStorage.removeItem(CACHE_ITEM);
+}
+
 const setControlsState = (disabled) => {
     const controls = document.querySelectorAll('.playground__controls a')
     let method = disabled ? 'add' : 'remove';
 
     controls.forEach(control => {
         control.classList[method]('control-disabled');
-    })
+    });
+
+    const cache = loadCache();
+
+    if (!cache) {
+        $('#playground__clear').css('display', 'none');
+    } else {
+        $('#playground__clear').css('display', 'block');
+    }
 }
 
 const startPlayground = async () => {
     const editor = ace.edit('playground__code');
     editor.session.setMode("ace/mode/javascript");
+
+    const cache = loadCache();
+    console.log(cache)
+    if (cache) {
+        editor.setValue(cache.code);
+        $('#playground__name').val(cache.name);
+        M.updateTextFields();
+    }
 
     let debounceEvent;
 
@@ -208,9 +240,9 @@ const startPlayground = async () => {
         debounceEvent && clearTimeout(debounceEvent);
 
         debounceEvent = setTimeout(async () => {
-            const compiled = await compile(
-                editor.session.getValue()
-            );
+            const code = editor.session.getValue();
+
+            const compiled = await compile(code);
 
             console.log(compiled);
             
@@ -223,6 +255,10 @@ const startPlayground = async () => {
 
             setControlsState(disabled);
 
+            saveCache({
+                code,
+                name: getSnippetName()
+            });
             $('.playground__loader').css('display', 'none');
             $('#playground__result').css('display', 'flex');
         }, 1000);
@@ -237,6 +273,12 @@ const startPlayground = async () => {
             getSnippetName(),
             compressed
         );
+    })
+
+    $('#playground__clear').on('click', () => {
+        $('#playground__name').val('');
+        editor.setValue('');
+        clearCache();
     })
 }
 
