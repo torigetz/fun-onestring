@@ -3,7 +3,7 @@
 
 ## Установка
 ```console
-$ git clone https;//github.com/tori-getz/fun-onestring
+$ git clone https://github.com/tori-getz/fun-onestring
 ```
 И нужно установить зависимости
 ```console
