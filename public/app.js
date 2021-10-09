@@ -154,8 +154,22 @@ const compile = async (code) => {
     return data.code;
 }
 
-const saveSnippet = (name, content) => {
+const encode = (content) => `data:text/javascript;charset=utf-8,${content}`;
 
+const saveSnippet = (name, content) => {
+    const downloadContainer = document.querySelector('#download');
+
+    const filename = `${name}.js`;
+    const encoded = encode(content);
+
+    const downloader = document.createElement('a');
+    downloader.style.display = 'none';
+    downloader.setAttribute('href', encoded);
+    downloader.setAttribute('download', filename);
+
+    downloadContainer.appendChild(downloader);
+
+    downloader.click();
 }
 
 const setControlsState = (disabled) => {
@@ -207,8 +221,6 @@ const startPlayground = async () => {
 
             const disabled = isDisabled();
 
-            alert(disabled);
-
             setControlsState(disabled);
 
             $('.playground__loader').css('display', 'none');
@@ -218,6 +230,13 @@ const startPlayground = async () => {
 
     $('#playground__run').on('click', () => {
         runCode(compressed);
+    })
+
+    $('#playground__save').on('click', () => {
+        saveSnippet(
+            getSnippetName(),
+            compressed
+        );
     })
 }
 
