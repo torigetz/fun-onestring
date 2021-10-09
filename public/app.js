@@ -209,14 +209,6 @@ const startPlayground = async () => {
     const editor = ace.edit('playground__code');
     editor.session.setMode("ace/mode/javascript");
 
-    const cache = loadCache();
-    console.log(cache)
-    if (cache) {
-        editor.setValue(cache.code);
-        $('#playground__name').val(cache.name);
-        M.updateTextFields();
-    }
-
     let debounceEvent;
 
     const getSnippetName = () => $('#playground__name').val();
@@ -229,8 +221,20 @@ const startPlayground = async () => {
         
         return false;
     }
-    
 
+    const cache = loadCache();
+    
+    if (cache) {
+        const compiled = await compile(cache.code);
+
+        editor.setValue(cache.code);
+        compressed = compiled;
+
+        $('#playground__name').val(cache.name);
+        M.updateTextFields();
+        setControlsState(isDisabled());
+    }
+    
     editor.session.on('change', () => {
         setControlsState(true);
 
