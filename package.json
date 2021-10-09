@@ -4,7 +4,7 @@
   "scripts": {
     "build": "node scripts/build",
     "start": "node scripts/dev",
-    "dev": "node_modules/.bin/nodemon scripts/dev"
+    "dev": "node_modules/.bin/nodemon scripts/dev --ignore public"
   },
   "devDependencies": {
     "app-root-dir": "^1.0.2",
