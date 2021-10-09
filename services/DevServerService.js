@@ -2,6 +2,8 @@
 import express from 'express';
 import * as appRootDir from 'app-root-dir';
 import * as path from 'path';
+import { FilesystemService } from './FilesystemService.js';
+import { MinifyService } from './MinifySerivce.js';
 
 const DEFAULT_PORT = 80;
 const INDEX_DIRECTORY = path.join(appRootDir.get(), 'public', 'index.html');
@@ -12,8 +14,44 @@ class DevServerController {
         res.sendFile(INDEX_DIRECTORY);
     }
 
+    static list (req, res) {
+        const fs = new FilesystemService();
+
+        const files = fs.dir('src');
+        let filtered = [];
+
+        for (let file of files) {
+            const filename = file.split('.').slice(0, -1).join('.');
+            const ext = file.split('.').pop();
+
+            if (ext === 'js') {
+                filtered = [ ...filtered, filename ];
+            }
+        }
+
+        res.send(filtered);
+    }
+
+    // static compile (data) {
+
+    // }
+
+    static load (req, res) {
+        const { name } = req.query;
+
+        const minifier = new MinifyService(name);
+
+        const result = {
+            code: minifier.compile()
+        }
+
+        res.send(result);
+    }
+
     static mapRoutes (app) {
         app.get('/', this.getIndex);
+        app.get('/list', this.list);
+        app.get('/load', this.load)
     }
 }
 

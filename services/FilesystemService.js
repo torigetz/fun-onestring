@@ -31,4 +31,16 @@ export class FilesystemService {
 
         fs.writeFileSync(filePath, content);
     }
+
+    dir (dir) {
+        const dirpath = this._getFilePath(dir);
+
+        if (!fs.existsSync(dirpath)) {
+            throw new Error(`${dirpath} not found`);
+        }
+
+        const result = fs.readdirSync(dirpath);
+
+        return result;
+    }
 }
